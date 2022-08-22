@@ -18,7 +18,8 @@ export default defineNuxtPlugin(nuxtApp => {
       if (!s.prefetched.has(path)) {
         s.prefetched.add(path)
 
-        const name = path === '/' ? '/index' : path
+        const name = path === '/' ? '/index' : path.endsWith('/') ? path.replace(/\/$/g, '') : path
+        console.log(name)
         const { data, state } = await $fetch<StaticData>(`/api/_static${name}.json`)
 
         // Override data
